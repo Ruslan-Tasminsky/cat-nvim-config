@@ -292,7 +292,7 @@ local config = {
                                 show_close_icon = false,
                                 diagnostics = "nvim_lsp",
                                 diagnostics_indicator = function(count, level)
-                                        local icon = level:match("error") and "" or ""
+                                        local icon = level:match "error" and "" or ""
                                         return " " .. icon .. count
                                 end,
                                 custom_areas = {
@@ -367,19 +367,27 @@ local config = {
                         }
                         return config -- return final config table
                 end,
-                treesitter = { -- overrides `require("treesitter").setup(...)`
-                        -- ensure_installed = { "lua" },
+                treesitter = { -- overrides `r'equire("treesitter").setup(...)`
+                        ensure_installed = {
+                                "lua", "html", "css", "json", "javascript", "typescript",
+                                "http", "gitcommit", "fish", "bash", "scss", "toml"
+                        }
                 },
                 -- use mason-lspconfig to configure LSP installations
                 ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
-                        -- ensure_installed = { "sumneko_lua" },
+                        ensure_installed = {
+                                "sumneko_lua", "emmet_ls", "cssls", "jsonls", "tsserver", "html"
+                        }
                 },
                 -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
                 ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
-                        -- ensure_installed = { "prettier", "stylua" },
+                        ensure_installed = {
+                                "prettier", "stylua", "fixjson", "luaformatter", "erb-lint",
+                                "eslint_d", "gitlint", "jsonlint", "luacheck"
+                        }
                 },
                 ["mason-nvim-dap"] = { -- overrides `require("mason-nvim-dap").setup(...)`
-                        -- ensure_installed = { "python" },
+                        ensure_installed = { "chrome" }
                 }
         },
         -- LuaSnip Options
