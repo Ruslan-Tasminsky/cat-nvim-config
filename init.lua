@@ -266,7 +266,7 @@ local config = {
                         -- You can disable default plugins as follows:
                         -- ["goolord/alpha-nvim"] = { disable = true },
                         -- "nyoom-engineering/oxocarbon.nvim"
-                        "EdenEast/nightfox.nvim", "catppuccin/nvim", "manzeloth/live-server"
+                        "EdenEast/nightfox.nvim", "manzeloth/live-server"
                         -- "Mofiqul/dracula.nvim"
                         -- You can also add new plugins here as well:
                         -- Add plugins, the packer syntax without the "use"
@@ -370,20 +370,21 @@ local config = {
                 treesitter = { -- overrides `r'equire("treesitter").setup(...)`
                         ensure_installed = {
                                 "lua", "html", "css", "json", "javascript", "typescript",
-                                "http", "gitcommit", "fish", "bash", "scss", "toml"
+                                "http", "gitcommit", "fish", "bash", "scss", "toml", "markdown"
                         }
                 },
                 -- use mason-lspconfig to configure LSP installations
                 ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
                         ensure_installed = {
-                                "sumneko_lua", "emmet_ls", "cssls", "jsonls", "tsserver", "html"
+                                "sumneko_lua", "emmet_ls", "cssls", "jsonls", "tsserver",
+                                "html", "marksman"
                         }
                 },
                 -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
                 ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
                         ensure_installed = {
                                 "prettier", "stylua", "fixjson", "luaformatter", "erb-lint",
-                                "eslint_d", "gitlint", "jsonlint", "luacheck"
+                                "eslint_d", "gitlint", "jsonlint", "luacheck", "markdownlint"
                         }
                 },
                 ["mason-nvim-dap"] = { -- overrides `require("mason-nvim-dap").setup(...)`
