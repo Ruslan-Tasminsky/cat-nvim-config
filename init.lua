@@ -10,7 +10,7 @@ local config = {
                 channel = "stable", -- "stable" or "nightly"
                 version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
                 branch = "main", -- branch name (NIGHTLY ONLY)
-                commit = nil, -- commit hash (NIGHTLY ONLY)
+                commit = nil,  -- commit hash (NIGHTLY ONLY)
                 pin_plugins = nil, -- nil, true, false (nil will pin plugins on stable only)
                 skip_prompts = false, -- skip prompts about breaking changes
                 show_changelog = true, -- show the changelog after performing an update
@@ -45,13 +45,13 @@ local config = {
                         wrap = false -- sets vim.opt.wrap
                 },
                 g = {
-                        mapleader = " ", -- sets vim.g.mapleader
+                        mapleader = " ",       -- sets vim.g.mapleader
                         autoformat_enabled = true, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
-                        cmp_enabled = true, -- enable completion at start
+                        cmp_enabled = true,    -- enable completion at start
                         autopairs_enabled = true, -- enable autopairs at start
                         diagnostics_enabled = true, -- enable diagnostics at start
                         status_diagnostics_enabled = true, -- enable diagnostics in statusline
-                        icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
+                        icons_enabled = true,  -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
                         ui_notifications_enabled = true, -- disable notifications when toggling UI elements
                         heirline_bufferline = false -- enable new heirline based bufferline (requires :PackerSync after changing)
                 }
@@ -243,8 +243,15 @@ local config = {
                                 function() require("alpha").start() end,
                                 desc = "Alpha Dashboard"
                         },
-
-                        [";"] = { ":" }
+                        [";"] = { ":" },
+                        ["<leader>pt"] = {
+                                "<cmd>LiveServer start<cr>",
+                                desc = "Start live-server"
+                        },
+                        ["<leader>pp"] = {
+                                "<cmd>LiveServer stop<cr>",
+                                desc = "Stop live-server"
+                        }
                         -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
                 },
                 i = {
@@ -252,12 +259,7 @@ local config = {
                         ["<C-j>"] = { "<down>" },
                         ["<C-k>"] = { "<up>" },
                         ["<C-l>"] = { "<right>" }
-                        -- ["<C-x>"] = { "<delete>" },
-                        -- ["<C-X>"] = { "<bs>" }
-
                         -- setting a mapping to false will disable it
-
-                        -- ["<esc>"] = false,
                 }
         },
         -- Configure plugins
@@ -288,69 +290,23 @@ local config = {
                 },
                 ["bufferline"] = {
                         options = {
-                                separator_style = "slant",
                                 show_close_icon = false,
                                 diagnostics = "nvim_lsp",
-                                diagnostics_indicator = function(count, level)
-                                        local icon = level:match "error" and "" or ""
-                                        return " " .. icon .. count
-                                end,
-                                custom_areas = {
-                                        right = function()
-                                                local result = {}
-                                                local seve = vim.diagnostic.severity
-                                                local error = #vim.diagnostic.get(0, {
-                                                            severity = seve.ERROR
-                                                    })
-                                                local warning = #vim.diagnostic.get(0, {
-                                                            severity = seve.WARN
-                                                    })
-                                                local info = #vim.diagnostic.get(0,
-                                                            { severity = seve.INFO })
-                                                local hint = #vim.diagnostic.get(0,
-                                                            { severity = seve.HINT })
-
-                                                if error ~= 0 then
-                                                        table.insert(result, {
-                                                                text = "  " .. error,
-                                                                fg = "#EC5241"
-                                                        })
-                                                end
-
-                                                if warning ~= 0 then
-                                                        table.insert(result, {
-                                                                text = "  " .. warning,
-                                                                fg = "#EFB839"
-                                                        })
-                                                end
-
-                                                if hint ~= 0 then
-                                                        table.insert(result, {
-                                                                text = "  " .. hint,
-                                                                fg = "#A3BA5E"
-                                                        })
-                                                end
-
-                                                if info ~= 0 then
-                                                        table.insert(result, {
-                                                                text = "  " .. info,
-                                                                fg = "#7EA9A7"
-                                                        })
-                                                end
-                                                return result
+                                diagnostics_indicator = function(count, level, diagnostics_dict,
+                                                                 context)
+                                        local s = " "
+                                        for e, n in pairs(diagnostics_dict) do
+                                                local sym = e == "error" and
+                                                    astronvim.get_icon "DiagnosticError" ..
+                                                    " " or
+                                                    (e == "warning" and
+                                                    astronvim.get_icon "DiagnosticWarn" ..
+                                                    " " or " ")
+                                                s = s .. n .. sym
                                         end
-                                }
+                                        return s
+                                end
                         }
-                },
-                ["neo-tree"] = {
-                        filesystem = {
-                                filtered_items = {
-                                        visible = true,
-                                        hide_dotfiles = false,
-                                        hide_gitignored = false
-                                }
-                        },
-                        enable_diagnostics = true
                 },
                 -- All other entries override the require("<key>").setup({...}) call for default plugins
                 ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
@@ -367,7 +323,8 @@ local config = {
                         }
                         return config -- return final config table
                 end,
-                treesitter = { -- overrides `r'equire("treesitter").setup(...)`
+                treesitter = {
+                        -- overrides `r'equire("treesitter").setup(...)`
                         ensure_installed = {
                                 "lua", "html", "css", "json", "javascript", "typescript",
                                 "http", "gitcommit", "fish", "bash", "scss", "toml", "markdown"
