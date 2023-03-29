@@ -5,22 +5,35 @@ return {
     opts = function(_, opts)
       -- customize the dashboard header
       opts.section.header.val = {
-        " █████  ███████ ████████ ██████   ██████",
-        "██   ██ ██         ██    ██   ██ ██    ██",
-        "███████ ███████    ██    ██████  ██    ██",
-        "██   ██      ██    ██    ██   ██ ██    ██",
-        "██   ██ ███████    ██    ██   ██  ██████",
-        " ",
-        "    ███    ██ ██    ██ ██ ███    ███",
-        "    ████   ██ ██    ██ ██ ████  ████",
-        "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
-        "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
-        "    ██   ████   ████   ██ ██      ██",
+        "                                ▄▄",
+        "     ▄██▄                     ▄████▄",
+        "    ██████▄                 ▄████████",
+        "   ████████▄               ▄██████████",
+        "  █████████████████████████████████████",
+        " ███████████████████████████████████████",
+        "▐███████████████████████████████████████▌",
+        "██████████▀      ▀████████▀      ▀███████",
+        "██████████    ██▌ ███▀▀███    ██▌ ███████",
+        "██████████▄    ▀ ▄███▌████▄    ▀ ▄███████",
+        "████████████▄▄▄▄█████▌███████▄▄▄█████████",
+        "█████████████████████▌███████████████████",
+        "▀████████████████████▌██████████████████▀",
       }
+      local button = require("astronvim.utils").alpha_button
+      opts.section.buttons.val = {
+        button("LDR c n", "  New File  "),
+        button("LDR f f", "  Find File  "),
+        button("LDR f o", "  Recents  "),
+        button("LDR f w", "  Find Word  "),
+        button("LDR S l", "  Last Session  "),
+        button("LDR c q", "X  Quit  "),
+      }
+      opts.section.footer.val = {}
+      opts.section.footer.opts.hl = nil
+
       return opts
     end,
-  },
-  -- You can disable default plugins as follows:
+  }, -- You can disable default plugins as follows:
   -- { "max397574/better-escape.nvim", enabled = false },
   --
   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
@@ -64,14 +77,25 @@ return {
   -- },
   -- By adding to the which-key config and using our helper function you can add more which-key registered bindings
   -- {
-  --   "folke/which-key.nvim",
-  --   config = function(plugin, opts)
-  --     require "plugins.configs.which-key"(plugin, opts) -- include the default astronvim config that calls the setup call
-  --     -- Add bindings which show up as group name
-  --     local wk = require "which-key"
-  --     wk.register({
-  --       b = { name = "Buffer" },
-  --     }, { mode = "n", prefix = "<leader>" })
-  --   end,
+  --   "akinsho/bufferline.nvim",
+  --
   -- },
+  -- {
+  --     "rebelot/heirline.nvim",
+  --     opts = function(_, opts)
+  --         opts.tabline = nil -- remove tabline
+  --         return opts
+  --     end
+  -- },
+  {
+    "folke/which-key.nvim",
+    config = function(plugin, opts)
+      require "plugins.configs.which-key"(plugin, opts) -- include the default astronvim config that calls the setup call
+      -- Add bindings which show up as group name
+      local wk = require "which-key"
+      wk.register({ e = { name = " Explorer" } }, { mode = "n", prefix = "<leader>" })
+      wk.register({ c = { name = "⌘ Cmd" } }, { mode = "n", prefix = "<leader>" })
+      wk.register({ c = { name = "⌘ Cmd" } }, { mode = "v", prefix = "<leader>" })
+    end,
+  },
 }

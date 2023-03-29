@@ -16,16 +16,10 @@ return {
       --   ["remote3"] = "github_user", -- GitHub user assume AstroNvim fork
     },
   },
-
   -- Set colorscheme to use
-  colorscheme = "astrodark",
-
+  colorscheme = "carbonfox",
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
-  diagnostics = {
-    virtual_text = true,
-    underline = true,
-  },
-
+  diagnostics = { virtual_text = true, underline = true },
   lsp = {
     -- customize lsp formatting options
     formatting = {
@@ -52,18 +46,25 @@ return {
       -- "pyright"
     },
   },
-
+  heirline = { file_icon = { tabline = true, statusline = true, winbar = true } },
   -- Configure require("lazy").setup() options
   lazy = {
     defaults = { lazy = true },
     performance = {
       rtp = {
         -- customize default disabled vim plugins
-        disabled_plugins = { "tohtml", "gzip", "matchit", "zipPlugin", "netrwPlugin", "tarPlugin", "matchparen" },
+        disabled_plugins = {
+          "tohtml",
+          "gzip",
+          "matchit",
+          "zipPlugin",
+          "netrwPlugin",
+          "tarPlugin",
+          "matchparen",
+        },
       },
     },
   },
-
   -- This function is run last and is a good place to configuring
   -- augroups/autocommands and custom filetypes also this just pure lua so
   -- anything that doesn't fit in the normal config locations above can go here
