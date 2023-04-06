@@ -18,28 +18,33 @@ return {
         ["<leader>bD"] = {
             function()
                 require("astronvim.utils.status").heirline.buffer_picker(
-                    function(bufnr) require("astronvim.utils.buffer").close(bufnr) end
-                )
+                    function(bufnr)
+                        require("astronvim.utils.buffer").close(bufnr)
+                    end)
             end,
-            desc = "Pick to close",
+            desc = "Pick to close"
         },
         ["<leader>bc"] = {
             function() require("astronvim.utils.buffer").close() end,
-            desc = "Close buffer",
+            desc = "Close buffer"
         },
         ["<leader>bC"] = {
-            function() require("astronvim.utils.buffer").close(0, true) end,
-            desc = "Force close buffer",
+            function()
+                require("astronvim.utils.buffer").close(0, true)
+            end,
+            desc = "Force close buffer"
         },
         ["<leader>bh"] = {
             function()
                 local wins = vim.api.nvim_tabpage_list_wins(0)
-                if #wins > 1 and vim.api.nvim_get_option_value("filetype", { win = wins[1] }) == "neo-tree" then
+                if #wins > 1 and
+                    vim.api.nvim_get_option_value("filetype", { win = wins[1] }) ==
+                    "neo-tree" then
                     vim.fn.win_gotoid(wins[2]) -- go to non-neo-tree window to toggle alpha
                 end
                 require("alpha").start(false, require("alpha").default_config)
             end,
-            desc = "Home Screen",
+            desc = "Home Screen"
         },
         -- explorer
         ["<leader>o"] = false,
@@ -59,23 +64,25 @@ return {
         ["<leader>cq"] = { "<cmd>q!<cr>", desc = "Quit" },
         ["<leader>cW"] = { "<cmd>wq<cr>", desc = "Save file & Quit" },
         ["<leader>c/"] = {
-            function() require("Comment.api").toggle.linewise.current() end,
-            desc = "Comment line",
+            function()
+                require("Comment.api").toggle.linewise.current()
+            end,
+            desc = "Comment line"
         },
-        ["<leader>cf"] = { "<cmd>enew<cr>", desc = "New File" },
+        ["<leader>cn"] = { "<cmd>enew<cr>", desc = "New File" },
         -- live-server
         ["<leader>pt"] = {
             "<cmd>LiveServerStart<cr>",
-            desc = "Start live-server",
+            desc = "Start live-server"
         },
-        ["<leader>pp"] = { "<cmd>LiveServerStop<cr>", desc = "Stop live-server" },
+        ["<leader>pp"] = { "<cmd>LiveServerStop<cr>", desc = "Stop live-server" }
     },
     v = {
         ["<leader>/"] = false,
         ["<leader>c/"] = {
             "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
-            desc = "Toggle comment line",
-        },
+            desc = "Toggle comment line"
+        }
     },
     i = {
         ["<C-s>"] = { "<cmd>w!<cr>", desc = "Save File" }, -- change description but the same command
@@ -84,6 +91,6 @@ return {
         ["<C-h>"] = { "<left>" },
         ["<C-j>"] = { "<down>" },
         ["<C-k>"] = { "<up>" },
-        ["<C-l>"] = { "<right>" },
-    },
+        ["<C-l>"] = { "<right>" }
+    }
 }
